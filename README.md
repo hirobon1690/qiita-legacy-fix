@@ -1,0 +1,2 @@
+# Qiita-legacy-fix
+Qiitaの古い記事を読むときに，Markdownの見出しが見出しとして認識されていないことがあるのを修正するUserScriptです．
