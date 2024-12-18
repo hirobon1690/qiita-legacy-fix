@@ -7,12 +7,14 @@
 // @match        *://*.qiita.com/*
 // @grant        none
 // ==/UserScript==
+
 (function () {
     'use strict';
 
     // Debugging function
     function log(msg) {
-        console.log(`[MarkdownHeaderScript] ${msg}`);
+        // Uncomment out when debugging.
+        // console.log(`[MarkdownHeaderScript] ${msg}`);
     }
 
     // Select the article body container
@@ -25,6 +27,12 @@
         const paragraphs = articleBody.querySelectorAll('p');
 
         paragraphs.forEach(p => {
+            // Skip <p> tags containing <iframe> or <code>
+            if (p.querySelector('iframe, code')) {
+                log(`Skipping <p> containing <iframe> or <code>: ${p.innerHTML}`);
+                return;
+            }
+
             // Apply the transformation to each <p> tag
             p.innerHTML = p.innerHTML.replace(/(#{1,6})\s*(.+)/g, (_, hashes, text) => {
                 const headerLevel = hashes.length; // Number of '#' determines the level
@@ -41,3 +49,4 @@
         log("Article body container not found.");
     }
 })();
+
